@@ -1,5 +1,7 @@
 package it.es.katas.comparator;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,11 +20,35 @@ class ComparatorTest {
     }
 
     @Test
-    void numericComparatorDelegatesToEachOperator() {
-        assertTrue(new NumericComparator(new NumericGreaterThanComparator()).compare("2", "1"));
-        assertTrue(new NumericComparator(new NumericGreaterThanOrEqualComparator()).compare("1.0", "1"));
-        assertTrue(new NumericComparator(new NumericLessThanComparator()).compare("-2", "1"));
-        assertTrue(new NumericComparator(new NumericLessThanOrEqualComparator()).compare("1", "1.00"));
+    void numericGreaterThanComparatorComparesValues() {
+        NumericGreaterThanComparator comparator = new NumericGreaterThanComparator();
+
+        assertTrue(comparator.compare(new BigDecimal("2"), new BigDecimal("1")));
+        assertFalse(comparator.compare(new BigDecimal("1"), new BigDecimal("1")));
+    }
+
+    @Test
+    void numericGreaterThanOrEqualComparatorComparesValues() {
+        NumericGreaterThanOrEqualComparator comparator = new NumericGreaterThanOrEqualComparator();
+
+        assertTrue(comparator.compare(new BigDecimal("1.0"), new BigDecimal("1")));
+        assertFalse(comparator.compare(new BigDecimal("1"), new BigDecimal("2")));
+    }
+
+    @Test
+    void numericLessThanComparatorComparesValues() {
+        NumericLessThanComparator comparator = new NumericLessThanComparator();
+
+        assertTrue(comparator.compare(new BigDecimal("-2"), new BigDecimal("1")));
+        assertFalse(comparator.compare(new BigDecimal("1"), new BigDecimal("1")));
+    }
+
+    @Test
+    void numericLessThanOrEqualComparatorComparesValues() {
+        NumericLessThanOrEqualComparator comparator = new NumericLessThanOrEqualComparator();
+
+        assertTrue(comparator.compare(new BigDecimal("1"), new BigDecimal("1.00")));
+        assertFalse(comparator.compare(new BigDecimal("2"), new BigDecimal("1")));
     }
 
     @Test

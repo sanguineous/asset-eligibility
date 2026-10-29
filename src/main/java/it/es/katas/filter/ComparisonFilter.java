@@ -1,7 +1,6 @@
 package it.es.katas.filter;
 
 import it.es.katas.comparator.ValueComparator;
-import it.es.katas.comparator.ValueComparator;
 import java.util.Map;
 
 public class ComparisonFilter implements Filter {

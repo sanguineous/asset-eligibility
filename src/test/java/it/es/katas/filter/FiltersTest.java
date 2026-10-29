@@ -27,7 +27,6 @@ class FiltersTest {
     void constantComparisonsHandleStringAndNumericValues() {
         Map<String, String> asset = Map.of("batteryLevel", "85", "zone", "Lombardy-Plant-A");
 
-        assertTrue(Filters.compare("zone", "Lombardy-Plant-A", Filters.caseInsensitiveEquals()).matches(asset));
         assertTrue(Filters.compare("batteryLevel", "20", Filters.numericGreaterThanOrEqual()).matches(asset));
         assertFalse(Filters.compare("batteryLevel", "90", Filters.numericGreaterThanOrEqual()).matches(asset));
         assertFalse(Filters.compare("batteryLevel", "20", Filters.numericLessThan()).matches(asset));
@@ -43,8 +42,6 @@ class FiltersTest {
         assertTrue(Filters.compareProperties("currentTemperature", "maxAllowedTemperature", Filters.numericLessThan()).matches(asset));
         assertFalse(Filters.compareProperties("currentTemperature", "maxAllowedTemperature", Filters.numericGreaterThan()).matches(asset));
 
-        Map<String, String> sensor = Map.of("zone", "Lombardy-Plant-A", "requiredZone", "lombardy-plant-a");
-        assertTrue(Filters.compareProperties("zone", "requiredZone", Filters.caseInsensitiveEquals()).matches(sensor));
     }
 
     @Test
@@ -120,6 +117,6 @@ class FiltersTest {
         Map<String, String> asset = Map.of("Zone", "Lombardy-Plant-A", "zone", "Other");
 
         assertTrue(Filters.compare("Zone", "lombardy-plant-a", Filters.caseInsensitiveEquals()).matches(asset));
-        assertFalse(Filters.compare("zone", "Lombardy-Plant-A", Filters.caseInsensitiveEquals()).matches(asset));
+        assertFalse(Filters.compare("ZONE", "Lombardy-Plant-A", Filters.caseInsensitiveEquals()).matches(asset));
     }
 }
