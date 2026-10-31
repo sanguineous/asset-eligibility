@@ -1,42 +1,60 @@
 package it.es.katas.filter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Map;
-import java.util.stream.Stream;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class AndFilterTest {
+    private static final Map<String, String> ASSET = Map.of("status", "online");
 
     @Test
-    void matchesWhenEveryCriterionMatches() {
-        Map<String, String> asset = Map.of("isOnline", "true", "batteryLevel", "85");
+    void matchesWhenBothFiltersMatch() {
+        Filter first = filterReturningForAsset(true);
+        Filter second = filterReturningForAsset(true);
 
-        assertTrue(eligibilityFilter().matches(asset));
+        assertTrue(Filters.and(first, second).matches(ASSET));
     }
 
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("assetsThatFailACriterion")
-    void doesNotMatchWhenAnyCriterionFails(String description, Map<String, String> asset) {
-        assertFalse(eligibilityFilter().matches(asset));
+    @Test
+    void doesNotMatchWhenSecondFilterDoesNotMatch() {
+        Filter first = filterReturningForAsset(true);
+        Filter second = filterReturningForAsset(false);
+
+        assertFalse(Filters.and(first, second).matches(ASSET));
     }
 
-    private static Filter eligibilityFilter() {
-        return Filters.and(
-            asset -> "true".equals(asset.get("isOnline")),
-            asset -> Integer.parseInt(asset.getOrDefault("batteryLevel", "0")) >= 20
-        );
+    @Test
+    void doesNotMatchAndDoesNotEvaluateSecondFilterWhenFirstFilterDoesNotMatch() {
+        Filter first = filterReturningForAsset(false);
+        Filter second = mock(Filter.class);
+
+        assertFalse(Filters.and(first, second).matches(ASSET));
+        verifyNoInteractions(second);
     }
 
-    private static Stream<Arguments> assetsThatFailACriterion() {
-        return Stream.of(
-            Arguments.of("asset is offline", Map.of("isOnline", "false", "batteryLevel", "85")),
-            Arguments.of("battery is below the minimum", Map.of("isOnline", "true", "batteryLevel", "10")),
-            Arguments.of("asset has no online status", Map.of("batteryLevel", "85"))
-        );
+    @Test
+    void rejectsNullFirstFilter() {
+        assertThrows(NullPointerException.class, () -> Filters.and(null, mock(Filter.class)));
+    }
+
+    @Test
+    void rejectsNullSecondFilter() {
+        assertThrows(NullPointerException.class, () -> Filters.and(mock(Filter.class), null));
+    }
+
+    private static Filter filterReturningForAsset(boolean result) {
+        Filter filter = mock(Filter.class);
+        when(filter.matches(same(ASSET))).thenReturn(result);
+        return filter;
     }
 }

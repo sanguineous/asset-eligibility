@@ -110,15 +110,17 @@ The intended filter expression is:
 
 ```java
 Filter eligibility = Filters.and(
-    Filters.compare(
-        "zone",
-        "Lombardy-Plant-A",
-        caseInsensitiveEquals()
-    ),
-    Filters.compare(
-        "isOnline",
-        "true",
-        caseInsensitiveEquals()
+    Filters.and(
+        Filters.compare(
+            "zone",
+            "Lombardy-Plant-A",
+            caseInsensitiveEquals()
+        ),
+        Filters.compare(
+            "isOnline",
+            "true",
+            caseInsensitiveEquals()
+        )
     ),
     Filters.compare(
         "batteryLevel",

@@ -34,15 +34,10 @@ public final class Filters {
         return new PropertyComparisonFilter(leftProperty, rightProperty, comparator);
     }
 
-    public static Filter and(Filter... filters) {
-        List<Filter> normalized = normalize(filters);
-        if (normalized.isEmpty()) {
-            return always();
-        }
-        if (normalized.size() == 1) {
-            return normalized.get(0);
-        }
-        return new AndFilter(normalized);
+    public static Filter and(Filter first, Filter second) {
+        java.util.Objects.requireNonNull(first, "first");
+        java.util.Objects.requireNonNull(second, "second");
+        return new AndFilter(List.of(first, second));
     }
 
     public static Filter or(Filter... filters) {
