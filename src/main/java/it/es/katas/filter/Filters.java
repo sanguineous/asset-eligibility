@@ -7,7 +7,6 @@ import it.es.katas.comparator.NumericGreaterThanOrEqualComparator;
 import it.es.katas.comparator.NumericLessThanComparator;
 import it.es.katas.comparator.NumericLessThanOrEqualComparator;
 import it.es.katas.comparator.ValueComparator;
-import java.util.Arrays;
 import java.util.List;
 
 public final class Filters {
@@ -40,15 +39,10 @@ public final class Filters {
         return new AndFilter(List.of(first, second));
     }
 
-    public static Filter or(Filter... filters) {
-        List<Filter> normalized = normalize(filters);
-        if (normalized.isEmpty()) {
-            return never();
-        }
-        if (normalized.size() == 1) {
-            return normalized.get(0);
-        }
-        return new OrFilter(normalized);
+    public static Filter or(Filter first, Filter second) {
+        java.util.Objects.requireNonNull(first, "first");
+        java.util.Objects.requireNonNull(second, "second");
+        return new OrFilter(List.of(first, second));
     }
 
     public static Filter not(Filter filter) {
@@ -73,14 +67,5 @@ public final class Filters {
 
     public static ValueComparator numericLessThanOrEqual() {
         return new NumericComparator(new NumericLessThanOrEqualComparator());
-    }
-
-    private static List<Filter> normalize(Filter... filters) {
-        if (filters == null || filters.length == 0) {
-            return List.of();
-        }
-        return Arrays.stream(filters)
-            .filter(java.util.Objects::nonNull)
-            .toList();
     }
 }
