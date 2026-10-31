@@ -7,6 +7,7 @@ import it.es.katas.comparator.NumericGreaterThanOrEqualComparator;
 import it.es.katas.comparator.NumericLessThanComparator;
 import it.es.katas.comparator.NumericLessThanOrEqualComparator;
 import it.es.katas.comparator.ValueComparator;
+import java.util.Arrays;
 import java.util.List;
 
 public final class Filters {
@@ -34,15 +35,11 @@ public final class Filters {
     }
 
     public static Filter and(Filter first, Filter second) {
-        java.util.Objects.requireNonNull(first, "first");
-        java.util.Objects.requireNonNull(second, "second");
-        return new AndFilter(List.of(first, second));
+        return new AndFilter(Arrays.asList(first, second));
     }
 
     public static Filter or(Filter first, Filter second) {
-        java.util.Objects.requireNonNull(first, "first");
-        java.util.Objects.requireNonNull(second, "second");
-        return new OrFilter(List.of(first, second));
+        return new OrFilter(Arrays.asList(first, second));
     }
 
     public static Filter not(Filter filter) {

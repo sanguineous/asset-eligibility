@@ -1,15 +1,15 @@
 package it.es.katas.filter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AndFilter implements Filter {
     private final List<Filter> filters;
 
     public AndFilter(List<Filter> filters) {
-        this.filters = new ArrayList<>(filters);
+        this.filters = List.copyOf(Objects.requireNonNull(filters, "filters"));
     }
 
     @Override
