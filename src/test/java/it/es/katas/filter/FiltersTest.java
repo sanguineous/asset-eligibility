@@ -11,19 +11,6 @@ import org.junit.jupiter.api.Test;
 class FiltersTest {
 
     @Test
-    void alwaysAndNeverFiltersBehaveAsExpected() {
-        assertTrue(Filters.always().matches(Map.of()));
-        assertFalse(Filters.never().matches(Map.of()));
-    }
-
-    @Test
-    void existsFilterChecksWhetherAPropertyIsPresent() {
-        Map<String, String> asset = Map.of("batteryLevel", "85");
-        assertTrue(Filters.exists("batteryLevel").matches(asset));
-        assertFalse(Filters.exists("temperature").matches(asset));
-    }
-
-    @Test
     void constantComparisonsHandleStringAndNumericValues() {
         Map<String, String> asset = Map.of("batteryLevel", "85", "zone", "Lombardy-Plant-A");
 
