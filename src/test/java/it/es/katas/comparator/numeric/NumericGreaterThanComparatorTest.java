@@ -11,7 +11,7 @@ class NumericGreaterThanComparatorTest {
 
     @Test
     void comparesValues() {
-        NumericGreaterThanComparator comparator = new NumericGreaterThanComparator();
+        NumericValueComparator comparator = NumericComparators.greaterThan();
 
         assertTrue(comparator.compare(new BigDecimal("2"), new BigDecimal("1")));
         assertFalse(comparator.compare(new BigDecimal("1"), new BigDecimal("1")));
@@ -19,6 +19,6 @@ class NumericGreaterThanComparatorTest {
 
     @Test
     void describesItsComparison() {
-        assertEquals(">", new NumericGreaterThanComparator().description());
+        assertEquals(">", NumericComparators.greaterThan().description());
     }
 }

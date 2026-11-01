@@ -1,12 +1,13 @@
-package it.es.katas.comparator;
+package it.es.katas.comparator.numeric;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import it.es.katas.comparator.numeric.NumericValueComparator;
+import it.es.katas.comparator.Comparators;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class NumericComparatorTest {
         when(numericValueComparator.compare(new BigDecimal("12.50"), new BigDecimal("3.25")))
             .thenReturn(numericComparatorResult);
         
-        NumericComparator comparator = new NumericComparator(numericValueComparator);
+        NumericComparator comparator = Comparators.numeric(numericValueComparator);
 
         assertEquals(numericComparatorResult, comparator.compare(" 12.50 ", "3.25"));
     }
@@ -36,7 +37,7 @@ class NumericComparatorTest {
     @MethodSource("invalidComparisons")
     void doesNotDelegateWhenEitherValueIsNullOrInvalid(String description, String left, String right) {
         NumericValueComparator numericComparator = mock(NumericValueComparator.class);
-        NumericComparator comparator = new NumericComparator(numericComparator);
+        NumericComparator comparator = Comparators.numeric(numericComparator);
 
         assertFalse(comparator.compare(left, right));
         verifyNoInteractions(numericComparator);
@@ -46,9 +47,14 @@ class NumericComparatorTest {
     void describesTheComparisonUsingTheNumericComparatorDescription() {
         NumericValueComparator numericComparator = mock(NumericValueComparator.class);
         when(numericComparator.description()).thenReturn(">=");
-        NumericComparator comparator = new NumericComparator(numericComparator);
+        NumericComparator comparator = Comparators.numeric(numericComparator);
 
         assertEquals(">=", comparator.description());
+    }
+
+    @Test
+    void rejectsNullNumericValueComparator() {
+        assertThrows(NullPointerException.class, () -> Comparators.numeric(null));
     }
 
     private static Stream<Arguments> invalidComparisons() {

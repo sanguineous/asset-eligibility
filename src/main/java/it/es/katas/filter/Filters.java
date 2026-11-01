@@ -1,12 +1,6 @@
 package it.es.katas.filter;
 
-import it.es.katas.comparator.CaseInsensitiveEqualsComparator;
-import it.es.katas.comparator.NumericComparator;
 import it.es.katas.comparator.ValueComparator;
-import it.es.katas.comparator.numeric.NumericGreaterThanComparator;
-import it.es.katas.comparator.numeric.NumericGreaterThanOrEqualComparator;
-import it.es.katas.comparator.numeric.NumericLessThanComparator;
-import it.es.katas.comparator.numeric.NumericLessThanOrEqualComparator;
 import java.util.Arrays;
 
 public final class Filters {
@@ -43,25 +37,5 @@ public final class Filters {
 
     public static Filter not(Filter filter) {
         return new NotFilter(filter);
-    }
-
-    public static ValueComparator caseInsensitiveEquals() {
-        return new CaseInsensitiveEqualsComparator();
-    }
-
-    public static ValueComparator numericGreaterThan() {
-        return new NumericComparator(new NumericGreaterThanComparator());
-    }
-
-    public static ValueComparator numericGreaterThanOrEqual() {
-        return new NumericComparator(new NumericGreaterThanOrEqualComparator());
-    }
-
-    public static ValueComparator numericLessThan() {
-        return new NumericComparator(new NumericLessThanComparator());
-    }
-
-    public static ValueComparator numericLessThanOrEqual() {
-        return new NumericComparator(new NumericLessThanOrEqualComparator());
     }
 }

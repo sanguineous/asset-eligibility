@@ -2,6 +2,7 @@ package it.es.katas.filter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -58,6 +59,14 @@ class PropertyComparisonFilterTest {
 
         assertFalse(filter.matches(null));
         verifyNoInteractions(comparator);
+    }
+
+    @Test
+    void rejectsNullComparator() {
+        assertThrows(
+            NullPointerException.class,
+            () -> Filters.compareProperties("currentTemperature", "maximumTemperature", null)
+        );
     }
 
     @Test

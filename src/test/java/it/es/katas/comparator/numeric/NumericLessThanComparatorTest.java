@@ -11,7 +11,7 @@ class NumericLessThanComparatorTest {
 
     @Test
     void comparesValues() {
-        NumericLessThanComparator comparator = new NumericLessThanComparator();
+        NumericValueComparator comparator = NumericComparators.lessThan();
 
         assertTrue(comparator.compare(new BigDecimal("-2"), new BigDecimal("1")));
         assertFalse(comparator.compare(new BigDecimal("1"), new BigDecimal("1")));
@@ -19,6 +19,6 @@ class NumericLessThanComparatorTest {
 
     @Test
     void describesItsComparison() {
-        assertEquals("<", new NumericLessThanComparator().description());
+        assertEquals("<", NumericComparators.lessThan().description());
     }
 }

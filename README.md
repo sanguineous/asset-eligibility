@@ -53,13 +53,13 @@ Filters.exists("batteryLevel");
 Filters.compare(
     "batteryLevel",
     "20",
-    numericGreaterThan()
+    Comparators.numeric(NumericComparators.greaterThan())
 );
 
 Filters.compareProperties(
     "currentTemperature",
     "maxAllowedTemperature",
-    numericLessThan()
+    Comparators.numeric(NumericComparators.lessThan())
 );
 
 Filters.and(filter1, filter2);
@@ -68,6 +68,28 @@ Filters.not(filter1);
 ```
 
 These examples illustrate the intended API; the exact factory signatures depend on the implementation.
+
+### Comparators factory
+
+`Comparators` provides factory methods for the comparison strategies accepted by `Filters.compare()` and `Filters.compareProperties()`.
+Its `numeric()` method adapts a `NumericValueComparator` to the string-based `ValueComparator` interface.
+
+```java
+Comparators.caseInsensitiveEquals();
+Comparators.numeric(NumericComparators.greaterThan());
+Comparators.numeric(NumericComparators.greaterThanOrEqual());
+Comparators.numeric(NumericComparators.lessThan());
+Comparators.numeric(NumericComparators.lessThanOrEqual());
+```
+
+For direct comparisons of `BigDecimal` values, `NumericComparators` provides the numeric operators without the string-parsing adapter:
+
+```java
+NumericComparators.greaterThan();
+NumericComparators.greaterThanOrEqual();
+NumericComparators.lessThan();
+NumericComparators.lessThanOrEqual();
+```
 
 ### ValueComparator
 
@@ -114,18 +136,18 @@ Filter eligibility = Filters.and(
         Filters.compare(
             "zone",
             "Lombardy-Plant-A",
-            caseInsensitiveEquals()
+            Comparators.caseInsensitiveEquals()
         ),
         Filters.compare(
             "isOnline",
             "true",
-            caseInsensitiveEquals()
+            Comparators.caseInsensitiveEquals()
         )
     ),
     Filters.compare(
         "batteryLevel",
         "20",
-        numericGreaterThanOrEqual()
+        Comparators.numeric(NumericComparators.greaterThanOrEqual())
     )
 );
 

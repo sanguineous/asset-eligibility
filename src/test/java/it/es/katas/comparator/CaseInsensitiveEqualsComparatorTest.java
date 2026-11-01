@@ -14,23 +14,23 @@ class CaseInsensitiveEqualsComparatorTest {
 
     @Test
     void matchesEqualStringsRegardlessOfCase() {
-        assertTrue(new CaseInsensitiveEqualsComparator().compare("Plant-A", "plant-a"));
+        assertTrue(Comparators.caseInsensitiveEquals().compare("Plant-A", "plant-a"));
     }
 
     @Test
     void doesNotMatchDifferentStrings() {
-        assertFalse(new CaseInsensitiveEqualsComparator().compare("Plant-A", "Plant-B"));
+        assertFalse(Comparators.caseInsensitiveEquals().compare("Plant-A", "Plant-B"));
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("comparisonsWithNullOperand")
     void doesNotMatchWhenEitherOperandIsNull(String description, String left, String right) {
-        assertFalse(new CaseInsensitiveEqualsComparator().compare(left, right));
+        assertFalse(Comparators.caseInsensitiveEquals().compare(left, right));
     }
 
     @Test
     void describesItsComparisonAsEquality() {
-        assertEquals("equals", new CaseInsensitiveEqualsComparator().description());
+        assertEquals("equals", Comparators.caseInsensitiveEquals().description());
     }
 
     private static Stream<Arguments> comparisonsWithNullOperand() {

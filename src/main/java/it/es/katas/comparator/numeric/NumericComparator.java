@@ -1,8 +1,9 @@
-package it.es.katas.comparator;
+package it.es.katas.comparator.numeric;
 
-import it.es.katas.comparator.numeric.NumericValueComparator;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import it.es.katas.comparator.ValueComparator;
 
 public class NumericComparator implements ValueComparator {
     private final NumericValueComparator operator;
@@ -31,11 +32,6 @@ public class NumericComparator implements ValueComparator {
         String normalized = value.trim();
         if (normalized.isEmpty()) {
             throw new NumberFormatException("Missing numeric value");
-        }
-
-        String upper = normalized.toUpperCase();
-        if ("NAN".equals(upper) || "INFINITY".equals(upper) || "-INFINITY".equals(upper) || "+INFINITY".equals(upper)) {
-            throw new NumberFormatException("Non-finite numeric value");
         }
 
         return new BigDecimal(normalized);
