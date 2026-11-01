@@ -1,5 +1,6 @@
 package it.es.katas.filter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,6 +51,16 @@ class AndFilterTest {
     @Test
     void rejectsNullSecondFilter() {
         assertThrows(NullPointerException.class, () -> Filters.and(mock(Filter.class), null));
+    }
+
+    @Test
+    void describesBothChildFilters() {
+        Filter first = mock(Filter.class);
+        Filter second = mock(Filter.class);
+        when(first.toString()).thenReturn("first");
+        when(second.toString()).thenReturn("second");
+
+        assertEquals("(first AND second)", Filters.and(first, second).toString());
     }
 
     private static Filter filterReturningForAsset(boolean result) {

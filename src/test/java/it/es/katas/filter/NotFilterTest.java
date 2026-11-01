@@ -1,5 +1,6 @@
 package it.es.katas.filter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,6 +34,14 @@ class NotFilterTest {
     @Test
     void rejectsNullWrappedFilter() {
         assertThrows(NullPointerException.class, () -> Filters.not(null));
+    }
+
+    @Test
+    void describesTheNegatedFilter() {
+        Filter child = mock(Filter.class);
+        when(child.toString()).thenReturn("child");
+
+        assertEquals("NOT (child)", Filters.not(child).toString());
     }
 
     private static Filter filterReturningForAsset(boolean result) {

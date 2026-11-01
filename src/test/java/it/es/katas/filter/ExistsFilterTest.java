@@ -1,5 +1,6 @@
 package it.es.katas.filter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,6 +22,11 @@ class ExistsFilterTest {
     @MethodSource("assetsWithoutProperty")
     void doesNotMatchWhenPropertyIsAbsent(String description, Map<String, String> asset) {
         assertFalse(Filters.exists("batteryLevel").matches(asset));
+    }
+
+    @Test
+    void describesThePropertyBeingChecked() {
+        assertEquals("exists(batteryLevel)", Filters.exists("batteryLevel").toString());
     }
 
     private static Stream<Arguments> assetsWithoutProperty() {

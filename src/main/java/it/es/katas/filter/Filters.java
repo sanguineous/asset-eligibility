@@ -2,13 +2,12 @@ package it.es.katas.filter;
 
 import it.es.katas.comparator.CaseInsensitiveEqualsComparator;
 import it.es.katas.comparator.NumericComparator;
-import it.es.katas.comparator.NumericGreaterThanComparator;
-import it.es.katas.comparator.NumericGreaterThanOrEqualComparator;
-import it.es.katas.comparator.NumericLessThanComparator;
-import it.es.katas.comparator.NumericLessThanOrEqualComparator;
 import it.es.katas.comparator.ValueComparator;
+import it.es.katas.comparator.numeric.NumericGreaterThanComparator;
+import it.es.katas.comparator.numeric.NumericGreaterThanOrEqualComparator;
+import it.es.katas.comparator.numeric.NumericLessThanComparator;
+import it.es.katas.comparator.numeric.NumericLessThanOrEqualComparator;
 import java.util.Arrays;
-import java.util.List;
 
 public final class Filters {
     private Filters() {

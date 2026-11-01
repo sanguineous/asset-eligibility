@@ -1,5 +1,6 @@
 package it.es.katas.comparator;
 
+import it.es.katas.comparator.numeric.NumericValueComparator;
 import java.math.BigDecimal;
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package it.es.katas.comparator;
+package it.es.katas.comparator.numeric;
 
 import java.math.BigDecimal;
 

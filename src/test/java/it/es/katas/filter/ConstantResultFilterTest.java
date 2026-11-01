@@ -1,10 +1,12 @@
 package it.es.katas.filter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,6 +23,12 @@ class ConstantResultFilterTest {
     @MethodSource("assets")
     void neverFilterDoesNotMatchAnyAsset(String description, Map<String, String> asset) {
         assertFalse(Filters.never().matches(asset));
+    }
+
+    @Test
+    void describesConstantFilters() {
+        assertEquals("always()", Filters.always().toString());
+        assertEquals("never()", Filters.never().toString());
     }
 
     private static Stream<Arguments> assets() {
